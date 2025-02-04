@@ -47,3 +47,5 @@ dist/
 
 # Frontend (если вдруг будет)
 node_modules/
+
+alembic/versions/*
