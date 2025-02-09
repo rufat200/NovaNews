@@ -4,8 +4,10 @@ Main frogramm module
 
 from fastapi import FastAPI
 
+from src import category_router, news_router
+
+
 app = FastAPI()
 
-@app.get('/')
-async def root():
-    return {"message": "hello world"}
+app.include_router(router=category_router)
+app.include_router(router=news_router)

@@ -1,2 +1,3 @@
-from .database import Base, engine, session
+from .database import *
 from .environs import *
+from .news import *
