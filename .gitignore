@@ -1,15 +1,6 @@
 # Игнорируем окружение
 venv/
 .env
-*.env
-*.venv/
-env/
-ENV/
-env.bak/
-venv.bak/
-.env.*
-.local
-secrets.json
 
 # Игнорируем зависимости
 Pipfile
@@ -22,8 +13,6 @@ __pycache__/
 *.py[cod]
 *.so
 *.pyd
-*.pyc
-*.pyo
 
 # Логи и отладочные файлы
 logs/
@@ -34,14 +23,12 @@ debug.log
 *.sqlite3
 *.db
 
-# Кэши инструментов
+# Кэш MyPy и других инструментов
 .mypy_cache/
 .pytest_cache/
 .tox/
 .coverage
 htmlcov/
-.flake8
-.pylintrc
 
 # Файлы IDE и редакторов
 .vscode/
@@ -49,20 +36,6 @@ htmlcov/
 *.iml
 *.sublime-project
 *.sublime-workspace
-
-# Docker и контейнеры (если используешь)
-*.dockerfile
-docker-compose.yml
-.dockerignore
-
-# Сборочные файлы (если вдруг решишь собирать пакет)
-build/
-dist/
-*.egg-info/
-.sass-cache/
-
-# Frontend (если вдруг будет)
-node_modules/
 
 # Alembic
 alembic/versions/*
