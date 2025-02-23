@@ -1,7 +1,10 @@
+"""
+Module reads environ variables
+"""
+
 import os
 
 from dotenv import load_dotenv
-
 
 load_dotenv()
 
@@ -13,3 +16,5 @@ DB_PORT = os.getenv("DB_PORT", "5432")
 
 JWT_SECRET = os.getenv("JWT_SECRET", "SECRET")
 USER_MANAGER_SECRET = os.getenv("USER_MANAGER_SECRET", "SECRET")
+
+MEDIA_ROOT = "media/"

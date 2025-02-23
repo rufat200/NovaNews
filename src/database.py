@@ -1,10 +1,13 @@
+"""
+Module for database connection
+"""
+
 from typing import AsyncGenerator, Any
 
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
 
 from .environs import *
-
 
 DATABASE_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

@@ -1,3 +1,7 @@
+"""
+Authentication config module
+"""
+
 from fastapi_users.authentication import BearerTransport, JWTStrategy, AuthenticationBackend
 
 from src import JWT_SECRET

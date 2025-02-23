@@ -39,3 +39,8 @@ htmlcov/
 
 # Alembic
 alembic/versions/*
+!alembic/versions/.gitkeep
+
+# Медия файлвы
+media/*
+!media/.gitkeep

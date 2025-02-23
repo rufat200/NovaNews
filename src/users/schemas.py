@@ -1,3 +1,7 @@
+"""
+User schemas
+"""
+
 import uuid
 
 from fastapi_users import schemas
