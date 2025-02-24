@@ -4,7 +4,7 @@ from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src import DBManager
-from users.models import User
+from src.users.models import User
 from ..models import Comment, News
 
 
@@ -25,7 +25,7 @@ class CommentService:
             model=Comment,
             offset=offset,
             limit=limit,
-            filter_by={"news_id": news_id}
+            filters={"news_id": news_id}
         )
 
     @classmethod
@@ -38,10 +38,10 @@ class CommentService:
         Получить конкретный комментарий по ID.
         """
         comment = await DBManager.get_object(
-            db,
-            Comment,
-            "id",
-            comment_id
+            db=db,
+            model=Comment,
+            field="id",
+            value=comment_id
         )
         if not comment:
             raise HTTPException(status_code=404, detail="Comment not found")
@@ -57,9 +57,13 @@ class CommentService:
         # Проверка существования новости
         if not await DBManager.exists(db, News, "id", comment_data["news_id"]):
             raise HTTPException(status_code=404, detail="News not found")
-
         comment_data["user_id"] = user.id
-        return await DBManager.create_object(db, Comment, **comment_data)
+        return await DBManager.create_object(
+            db=db, 
+            model=Comment,
+            commit=True, 
+            **comment_data
+        )
 
     @classmethod
     async def delete_comment(
@@ -70,8 +74,14 @@ class CommentService:
     ) -> None:
         comment = await cls.get_comment(db, comment_id)
         if comment.user_id != user.id:
-            raise HTTPException(status_code=403, detail="Forbidden")
-        await DBManager.delete_object(db, Comment, "id", comment_id)
+            raise HTTPException(status_code=403, detail="You do not have permission to update this comment")
+        await DBManager.delete_object(
+            db=db, 
+            model=Comment, 
+            field="id", 
+            value=comment_id, 
+            commit=True
+        )
 
     @classmethod
     async def update_comment(
@@ -83,12 +93,13 @@ class CommentService:
     ) -> Comment:
         comment = await cls.get_comment(db, comment_id)
         if comment.user_id != user.id:
-            raise HTTPException(status_code=403, detail="Forbidden")
+            raise HTTPException(status_code=403, detail="You do not have permission to update this comment")
         return await DBManager.update_object(
-            db,
-            Comment,
-            "id",
-            comment_id,
+            db=db,
+            model=Comment,
+            field="id",
+            value=comment_id,
+            commit=True,
             **comment_data
         )
 
@@ -101,7 +112,7 @@ class CommentService:
         user: User,
     ) -> Comment:
         """
-        Частичное обновление комментария (только если он принадлежит пользователю).
+        Частичное обновление комментария.
         """
         comment = await DBManager.partial_update_object(
             db=db,

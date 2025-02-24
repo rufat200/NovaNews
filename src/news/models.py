@@ -19,7 +19,7 @@ class Category(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(String(length=100), nullable=False)
-    created: Mapped[datetime] = mapped_column(default=datetime.utcnow())
+    created: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     news: Mapped[list["News"]] = relationship("News", back_populates="category")
 
@@ -33,8 +33,8 @@ class News(Base):
     title: Mapped[str] = mapped_column(String(length=100), nullable=False)
     content: Mapped[str | None] = mapped_column(nullable=True)
     images: Mapped[list[str | None]] = mapped_column(ARRAY(String), nullable=True)
-    created: Mapped[datetime] = mapped_column(default=datetime.utcnow())
-    updated: Mapped[datetime] = mapped_column(default=datetime.utcnow())
+    created: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    updated: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     category_id: Mapped[int | None] = mapped_column(
         ForeignKey("category.id", ondelete="SET NULL"), nullable=True
@@ -52,8 +52,8 @@ class Comment(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     text: Mapped[str] = mapped_column(String(500), nullable=False)
-    created: Mapped[datetime] = mapped_column(default=datetime.utcnow())
-    updated: Mapped[datetime] = mapped_column(default=datetime.utcnow())
+    created: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    updated: Mapped[datetime] = mapped_column(default=datetime.utcnow)
 
     news_id: Mapped[int] = mapped_column(
         ForeignKey("news.id", ondelete="CASCADE")
@@ -64,5 +64,3 @@ class Comment(Base):
 
     news: Mapped[News] = relationship("News", back_populates="comments")
     user: Mapped[User] = relationship("User", back_populates="comments")
-
-

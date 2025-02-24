@@ -5,7 +5,9 @@
 3. Пропиши следующее
 ```bash
 docker run --name fast_db -e POSTGRES_PASSWORD=123456 -p 5432:5432 -d postgres
+```
 
+```bash
 alembic revision --autogenerate -m "ВПИШИ СЮДА ВСЁ ЧТО ЗАХОЧЕШЬ"
 
 alembic upgrade head
@@ -22,3 +24,9 @@ fastapi dev main.py
 ```
 uvicorn main:app --reload
 ```
+
+4. Если проблемы с алембиком то удали две папки **alembic.ini** и **alembic**, после пропиши
+```bash
+alembic init -t async alembic
+```
+после вернись к 3 действию

@@ -5,11 +5,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 from fastapi_users.authentication import Authenticator
 
-from users import User, fastapi_users
+from src.users import User, fastapi_users
 from src import get_db
 from ..models import Comment
-from schemas import CommentReadSchema, CommentCreateSchema
-from services import CommentService
+from ..schemas import CommentReadSchema, CommentCreateSchema
+from ..services import CommentService
 
 router = APIRouter(
     prefix="/comments",

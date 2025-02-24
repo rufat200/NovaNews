@@ -7,10 +7,12 @@ import os
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse
 
+
 router = APIRouter(
     prefix="/file",
     tags=["Media"]
 )
+
 
 @router.get("/{file_path:path}", response_class=FileResponse)
 async def get_media(file_path: str) -> FileResponse:

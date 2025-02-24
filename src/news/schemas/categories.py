@@ -17,10 +17,3 @@ class CategoryReadSchema(BaseModel):
 
     class Config:
         from_attributes = True
-
-
-class CategoryCreateSchema(BaseModel):
-    """
-    Category create schema
-    """
-    name: str

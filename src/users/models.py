@@ -19,10 +19,8 @@ class User(SQLAlchemyBaseUserTableUUID, Base):
     __tablename__ = "user"
 
     full_name: Mapped[str] = mapped_column(String(length=100), nullable=False)
-    comments: Mapped[list["Comment"]] = relationship("Comment", back_populates="news")
+    comments: Mapped[list["Comment"]] = relationship("Comment", back_populates="user")
 
 
 async def get_user_db(session: AsyncSession = Depends(get_db)):
     yield SQLAlchemyUserDatabase(session, User)
-
-
