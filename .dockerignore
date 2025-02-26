@@ -1,7 +1,6 @@
 # Игнорируем окружение
 venv/
 .env
-.env.docker
 
 # Игнорируем зависимости
 Pipfile
@@ -37,10 +36,6 @@ htmlcov/
 *.iml
 *.sublime-project
 *.sublime-workspace
-
-# Alembic
-alembic/versions/*
-!alembic/versions/.gitkeep
 
 # Медия файлвы
 media/*
