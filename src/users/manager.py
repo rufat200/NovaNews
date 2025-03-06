@@ -6,7 +6,7 @@ from fastapi_users import BaseUserManager, UUIDIDMixin
 
 from src import USER_MANAGER_SECRET
 from .models import User, get_user_db
-
+from src import print_user_data
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = USER_MANAGER_SECRET
@@ -14,6 +14,10 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
         print(f"User {user.id} has registered.")
+        print_user_data.apply_async(args=[{
+            'email': user.email,
+            'full_name': user.full_name
+        }])
 
     async def on_after_forgot_password(
         self, user: User, token: str, request: Optional[Request] = None
