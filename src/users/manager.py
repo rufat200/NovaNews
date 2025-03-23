@@ -4,20 +4,27 @@ from typing import Optional
 from fastapi import Depends, Request
 from fastapi_users import BaseUserManager, UUIDIDMixin
 
-from src import USER_MANAGER_SECRET
 from .models import User, get_user_db
-from src import print_user_data
+from src import (
+    USER_MANAGER_SECRET,
+    send_verification_code,
+    generate_verification_code, 
+    redis_client
+)
+
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = USER_MANAGER_SECRET
     verification_token_secret = USER_MANAGER_SECRET
 
     async def on_after_register(self, user: User, request: Optional[Request] = None):
-        print(f"User {user.id} has registered.")
-        print_user_data.apply_async(args=[{
-            'email': user.email,
-            'full_name': user.full_name
-        }])
+        code = generate_verification_code()
+        await redis_client.setex(
+            name=user.email,
+            time=600,
+            value=code
+        )
+        send_verification_code.apply_async(args=[user.email, code])
 
     async def on_after_forgot_password(
         self, user: User, token: str, request: Optional[Request] = None

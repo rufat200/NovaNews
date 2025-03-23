@@ -1,3 +1,3 @@
-#!bin/sh
+#!/bin/sh
 
-exec celery -A src.celery.celery_app worker --loglevel=info
+exec celery -A app.src.celery.celery_app worker --loglevel=info

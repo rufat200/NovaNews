@@ -1,7 +1,3 @@
-"""
-DB models Manager
-"""
-
 from typing import Sequence, Type, Any
 
 from sqlalchemy import select, delete

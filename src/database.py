@@ -1,7 +1,3 @@
-"""
-Module for database connection
-"""
-
 from typing import AsyncGenerator, Any
 
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine, AsyncSession
